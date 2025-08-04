@@ -1,0 +1,10 @@
+{
+  "java.home": "F:\\Software\\Java\\jdk-21",
+  "java.configuration.runtimes": [
+    {
+      "name": "JavaSE-21",
+      "path": "F:\\Software\\Java\\jdk-21",
+      "default": true
+    }
+  ]
+}
