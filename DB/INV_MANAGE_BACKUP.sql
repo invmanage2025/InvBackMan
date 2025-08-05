@@ -2,7 +2,7 @@
 -- PostgreSQL database cluster dump
 --
 
--- Started on 2025-08-04 01:04:28
+-- Started on 2025-08-06 02:56:06
 
 SET default_transaction_read_only = off;
 
@@ -44,7 +44,7 @@ ALTER ROLE postgres WITH SUPERUSER INHERIT CREATEROLE CREATEDB LOGIN REPLICATION
 -- Dumped from database version 16.9
 -- Dumped by pg_dump version 16.9
 
--- Started on 2025-08-04 01:04:28
+-- Started on 2025-08-06 02:56:06
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -57,7 +57,7 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
--- Completed on 2025-08-04 01:04:28
+-- Completed on 2025-08-06 02:56:07
 
 --
 -- PostgreSQL database dump complete
@@ -74,7 +74,7 @@ SET row_security = off;
 -- Dumped from database version 16.9
 -- Dumped by pg_dump version 16.9
 
--- Started on 2025-08-04 01:04:28
+-- Started on 2025-08-06 02:56:07
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -88,7 +88,7 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- TOC entry 4872 (class 1262 OID 24584)
+-- TOC entry 4875 (class 1262 OID 24584)
 -- Name: INV_USER_01; Type: DATABASE; Schema: -; Owner: postgres
 --
 
@@ -177,34 +177,6 @@ CREATE TABLE public."T_PRIMARY_GODOWN" (
 ALTER TABLE public."T_PRIMARY_GODOWN" OWNER TO postgres;
 
 --
--- TOC entry 215 (class 1259 OID 24585)
--- Name: T_PURCHASE; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public."T_PURCHASE" (
-    "PRC_ID" integer NOT NULL,
-    "PRC_INVOICE" text NOT NULL,
-    "PRC_REMARKS" text,
-    "EFF_START_DATE" timestamp without time zone NOT NULL,
-    "EFF_END_DATE" timestamp without time zone NOT NULL,
-    "DELETED_FLAG" boolean NOT NULL,
-    "CREATED_BY" text NOT NULL,
-    "UPDATED_BY" text
-);
-
-
-ALTER TABLE public."T_PURCHASE" OWNER TO postgres;
-
---
--- TOC entry 4873 (class 0 OID 0)
--- Dependencies: 215
--- Name: TABLE "T_PURCHASE"; Type: COMMENT; Schema: public; Owner: postgres
---
-
-COMMENT ON TABLE public."T_PURCHASE" IS 'Table to Store Purchase and Invoice Records';
-
-
---
 -- TOC entry 217 (class 1259 OID 24603)
 -- Name: T_PURCHASE_INS; Type: TABLE; Schema: public; Owner: postgres
 --
@@ -228,7 +200,50 @@ CREATE TABLE public."T_PURCHASE_INS" (
 ALTER TABLE public."T_PURCHASE_INS" OWNER TO postgres;
 
 --
--- TOC entry 4866 (class 0 OID 24634)
+-- TOC entry 220 (class 1259 OID 32776)
+-- Name: prc_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.prc_seq
+    START WITH 100
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.prc_seq OWNER TO postgres;
+
+--
+-- TOC entry 215 (class 1259 OID 24585)
+-- Name: t_purchase; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.t_purchase (
+    prc_id integer DEFAULT nextval('public.prc_seq'::regclass) NOT NULL,
+    prc_invoice text NOT NULL,
+    prc_remarks text,
+    eff_start_date timestamp without time zone NOT NULL,
+    eff_end_date timestamp without time zone NOT NULL,
+    deleted_flag boolean NOT NULL,
+    created_by text NOT NULL,
+    updated_by text
+);
+
+
+ALTER TABLE public.t_purchase OWNER TO postgres;
+
+--
+-- TOC entry 4876 (class 0 OID 0)
+-- Dependencies: 215
+-- Name: TABLE t_purchase; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON TABLE public.t_purchase IS 'Table to Store Purchase and Invoice Records';
+
+
+--
+-- TOC entry 4868 (class 0 OID 24634)
 -- Dependencies: 219
 -- Data for Name: T_DOMAIN; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -238,7 +253,7 @@ COPY public."T_DOMAIN" ("DOM_ID", "DOM_ATTR", "DOM_TYPE", "DOM_SUBTYPE", "DOM_VA
 
 
 --
--- TOC entry 4863 (class 0 OID 24594)
+-- TOC entry 4865 (class 0 OID 24594)
 -- Dependencies: 216
 -- Data for Name: T_MODEL; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -248,7 +263,7 @@ COPY public."T_MODEL" ("MDL_ID", "MDL_MODEL", "MDL_NAME", "MDL_REMARKS", "EFF_ST
 
 
 --
--- TOC entry 4865 (class 0 OID 24622)
+-- TOC entry 4867 (class 0 OID 24622)
 -- Dependencies: 218
 -- Data for Name: T_PRIMARY_GODOWN; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -258,19 +273,7 @@ COPY public."T_PRIMARY_GODOWN" ("PGN_ID", "PGN_PRC_ID", "PGN_MODEL", "PGN_PRODUC
 
 
 --
--- TOC entry 4862 (class 0 OID 24585)
--- Dependencies: 215
--- Data for Name: T_PURCHASE; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public."T_PURCHASE" ("PRC_ID", "PRC_INVOICE", "PRC_REMARKS", "EFF_START_DATE", "EFF_END_DATE", "DELETED_FLAG", "CREATED_BY", "UPDATED_BY") FROM stdin;
-100	SDEF345	Test	2000-01-01 00:00:00	9999-01-01 00:00:00	t	Tanmoy	\N
-101	ACD	\N	2000-01-01 00:00:00	9999-01-01 00:00:00	f	Sumit	\N
-\.
-
-
---
--- TOC entry 4864 (class 0 OID 24603)
+-- TOC entry 4866 (class 0 OID 24603)
 -- Dependencies: 217
 -- Data for Name: T_PURCHASE_INS; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -280,7 +283,28 @@ COPY public."T_PURCHASE_INS" ("PIS_ID", "PIS_PRC_ID", "PIS_MODEL", "PIS_SERIAL_N
 
 
 --
--- TOC entry 4716 (class 2606 OID 24640)
+-- TOC entry 4864 (class 0 OID 24585)
+-- Dependencies: 215
+-- Data for Name: t_purchase; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.t_purchase (prc_id, prc_invoice, prc_remarks, eff_start_date, eff_end_date, deleted_flag, created_by, updated_by) FROM stdin;
+104	Hiii	Third Entry	2025-08-05 06:00:00	9999-01-01 00:00:00	f	Rashu	\N
+105	Reality	Wake Up	2025-08-06 06:00:00	9999-01-01 00:00:00	f	Sonya	Sonya's Friend
+\.
+
+
+--
+-- TOC entry 4877 (class 0 OID 0)
+-- Dependencies: 220
+-- Name: prc_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.prc_seq', 105, true);
+
+
+--
+-- TOC entry 4718 (class 2606 OID 24640)
 -- Name: T_DOMAIN T_DOMAIN_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -289,7 +313,7 @@ ALTER TABLE ONLY public."T_DOMAIN"
 
 
 --
--- TOC entry 4708 (class 2606 OID 24600)
+-- TOC entry 4710 (class 2606 OID 24600)
 -- Name: T_MODEL T_MODEL_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -298,7 +322,7 @@ ALTER TABLE ONLY public."T_MODEL"
 
 
 --
--- TOC entry 4714 (class 2606 OID 24628)
+-- TOC entry 4716 (class 2606 OID 24628)
 -- Name: T_PRIMARY_GODOWN T_PRIMARY_GODOWN_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -307,7 +331,7 @@ ALTER TABLE ONLY public."T_PRIMARY_GODOWN"
 
 
 --
--- TOC entry 4712 (class 2606 OID 24609)
+-- TOC entry 4714 (class 2606 OID 24609)
 -- Name: T_PURCHASE_INS T_PURCHASE_INS_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -316,25 +340,25 @@ ALTER TABLE ONLY public."T_PURCHASE_INS"
 
 
 --
--- TOC entry 4704 (class 2606 OID 24591)
--- Name: T_PURCHASE T_PURCHASE_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 4706 (class 2606 OID 24591)
+-- Name: t_purchase T_PURCHASE_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public."T_PURCHASE"
-    ADD CONSTRAINT "T_PURCHASE_pkey" PRIMARY KEY ("PRC_ID");
-
-
---
--- TOC entry 4706 (class 2606 OID 24593)
--- Name: T_PURCHASE Unique; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public."T_PURCHASE"
-    ADD CONSTRAINT "Unique" UNIQUE ("PRC_INVOICE");
+ALTER TABLE ONLY public.t_purchase
+    ADD CONSTRAINT "T_PURCHASE_pkey" PRIMARY KEY (prc_id);
 
 
 --
--- TOC entry 4710 (class 2606 OID 24602)
+-- TOC entry 4708 (class 2606 OID 24593)
+-- Name: t_purchase Unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.t_purchase
+    ADD CONSTRAINT "Unique" UNIQUE (prc_invoice);
+
+
+--
+-- TOC entry 4712 (class 2606 OID 24602)
 -- Name: T_MODEL Unique Model; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -343,24 +367,24 @@ ALTER TABLE ONLY public."T_MODEL"
 
 
 --
--- TOC entry 4717 (class 2606 OID 24610)
+-- TOC entry 4719 (class 2606 OID 24610)
 -- Name: T_PURCHASE_INS PURCHASE_Fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public."T_PURCHASE_INS"
-    ADD CONSTRAINT "PURCHASE_Fkey" FOREIGN KEY ("PIS_PRC_ID") REFERENCES public."T_PURCHASE"("PRC_ID");
+    ADD CONSTRAINT "PURCHASE_Fkey" FOREIGN KEY ("PIS_PRC_ID") REFERENCES public.t_purchase(prc_id);
 
 
 --
--- TOC entry 4718 (class 2606 OID 24629)
+-- TOC entry 4720 (class 2606 OID 24629)
 -- Name: T_PRIMARY_GODOWN T_PRIMARY_GODOWN_PGN_PRC_ID_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public."T_PRIMARY_GODOWN"
-    ADD CONSTRAINT "T_PRIMARY_GODOWN_PGN_PRC_ID_fkey" FOREIGN KEY ("PGN_PRC_ID") REFERENCES public."T_PURCHASE"("PRC_ID");
+    ADD CONSTRAINT "T_PRIMARY_GODOWN_PGN_PRC_ID_fkey" FOREIGN KEY ("PGN_PRC_ID") REFERENCES public.t_purchase(prc_id);
 
 
--- Completed on 2025-08-04 01:04:28
+-- Completed on 2025-08-06 02:56:07
 
 --
 -- PostgreSQL database dump complete
@@ -379,7 +403,7 @@ ALTER TABLE ONLY public."T_PRIMARY_GODOWN"
 -- Dumped from database version 16.9
 -- Dumped by pg_dump version 16.9
 
--- Started on 2025-08-04 01:04:28
+-- Started on 2025-08-06 02:56:07
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -409,13 +433,13 @@ CREATE EXTENSION IF NOT EXISTS adminpack WITH SCHEMA pg_catalog;
 COMMENT ON EXTENSION adminpack IS 'administrative functions for PostgreSQL';
 
 
--- Completed on 2025-08-04 01:04:28
+-- Completed on 2025-08-06 02:56:07
 
 --
 -- PostgreSQL database dump complete
 --
 
--- Completed on 2025-08-04 01:04:28
+-- Completed on 2025-08-06 02:56:07
 
 --
 -- PostgreSQL database cluster dump complete
