@@ -1,7 +1,10 @@
 package Inv.Manage.App.dao;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
+import Inv.Manage.App.dto.PurchaseDto;
 import Inv.Manage.App.entity.Purchase;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
@@ -50,6 +53,14 @@ public class PurchaseDao {
 	public Purchase updatePurchase(Purchase updatedRecord) {
 		updatedRecord = entityManager.merge(updatedRecord);
 		return updatedRecord;
+	}
+
+	public List<Purchase> fetchAllRecords() {
+		String HQL = "FROM Purchase";
+		Query query = entityManager.createQuery(HQL);
+		
+		List<Purchase> records = query.getResultList();
+		return records;
 	}
 	
 }

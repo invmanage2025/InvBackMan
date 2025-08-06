@@ -1,5 +1,7 @@
 package Inv.Manage.App.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -13,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import Inv.Manage.App.dto.PurchaseCreateDto;
 import Inv.Manage.App.dto.PurchaseDto;
 import Inv.Manage.App.dto.PurchaseUpdateDto;
@@ -48,6 +49,12 @@ public class PurchaseController {
     	}
     }
     
+    //fetch all purchase records
+    @GetMapping("/")
+    public List<PurchaseDto> fetchAllRecords() {
+    	List<PurchaseDto> allRecords = purchaseService.fetchAllPurchaseRecords();
+    	return allRecords;
+    }
     //Update Purchase Record
     @PutMapping("/")
     public ResponseEntity<PurchaseDto> updatePurchaseRecord(@RequestBody PurchaseUpdateDto updateDto ) {

@@ -1,8 +1,10 @@
 package Inv.Manage.App.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import Inv.Manage.App.dao.PurchaseDao;
 import Inv.Manage.App.dto.PurchaseCreateDto;
 import Inv.Manage.App.dto.PurchaseDto;
@@ -92,6 +94,18 @@ public class PurchaseService {
 			}
 		}
 		return null;
+	}
+
+	public List<PurchaseDto> fetchAllPurchaseRecords() {		
+		List<Purchase> result= dao.fetchAllRecords();
+		List<PurchaseDto> allResult = new ArrayList<>();
+		if(result != null && !result.isEmpty()) {
+			for(int i=0;i<result.size();i++) {
+				PurchaseDto record = new PurchaseDto(result.get(i));
+				allResult.add(record);
+			}
+		}
+		return allResult;
 	}
 	
 }
