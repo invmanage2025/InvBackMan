@@ -108,4 +108,19 @@ public class PurchaseService {
 		return allResult;
 	}
 	
+	public PurchaseDto fetchPurchaseById(int id) {
+		Purchase entity = dao.getPurchaseById(id);
+		if(entity != null) {
+			return new PurchaseDto(entity);
+		}else {
+			return null;
+		}
+	}
+	
+	public Boolean deletePurchaseById(int id) {
+		return dao.deletePurchase(id);
+	}
+	
+	
+	
 }

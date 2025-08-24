@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,12 +30,24 @@ public class PurchaseController {
     @Autowired
     PurchaseService purchaseService;
 
+    @GetMapping(value = "/{id}")
+    public PurchaseDto getPurchaseById(@PathVariable int id) {
+    	return purchaseService.fetchPurchaseById(id);
+    }
+    
     @PostMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public PurchaseDto addPurchaseRecord(@RequestBody PurchaseCreateDto createDto ) {
     	//System.out.println(createDto);
     	return purchaseService.createPurchase(createDto);
     }
+    
+    @DeleteMapping(value = "/{id}")
+    public Boolean deletePurchaseById(@PathVariable int id) {
+    	return purchaseService.deletePurchaseById(id);
+    }
+    
+    
     
     //is Invoice Exists
     @GetMapping("/isInvoiceExist/{invoiceNo}")

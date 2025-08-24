@@ -63,4 +63,14 @@ public class PurchaseDao {
 		return records;
 	}
 	
+	@Transactional
+	public Boolean deletePurchase(int id) {
+		Purchase entity = getPurchaseById(id);
+		if(entity == null) 
+			return false;
+		entityManager.remove(entity);
+		Boolean deleteStatus = !isInvoiceExist(entity.getInvoice());
+		return deleteStatus;
+	}
+	
 }
